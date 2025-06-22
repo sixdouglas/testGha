@@ -26,7 +26,11 @@ jobs:
         run: |
           PROJECT_VERSION=$(echo "${{ inputs.tag }}" | sed -E "s/[a-zA-Z\-]+-([1-9]+[0-9]?.[0-9]+.[0-9]+)/\\1/" | xargs )
           echo "PROJECT_VERSION: ${PROJECT_VERSION}"
-          IS_JAVA_21=[[ $PROJECT_VERSION =~ ^4.[0-9]+.[0-9]+$ ]] && echo "true" || echo "false"
+          if [[ $PROJECT_VERSION =~ ^4.[0-9]+.[0-9]+$ ]]; then
+            IS_JAVA_21="true"
+          else
+            IS_JAVA_21="false"
+          fi
           echo "IS_JAVA_21: ${IS_JAVA_21}"
           echo "IS_JAVA_21=${IS_JAVA_21}" >> $GITHUB_ENV
 
